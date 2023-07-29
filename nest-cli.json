@@ -10,15 +10,6 @@
   "monorepo": true,
   "root": "apps/classting",
   "projects": {
-    "classting": {
-      "type": "application",
-      "root": "apps/classting",
-      "entryFile": "main",
-      "sourceRoot": "apps/classting/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/classting/tsconfig.app.json"
-      }
-    },
     "api-server": {
       "type": "application",
       "root": "apps/api-server",
