@@ -6,7 +6,8 @@ $ npm install
 
 ## Set Up
 ```
-- add value to env/local.env file
+- create local.env file
+- create database schema "school"
 ```
 
 ## Running the app
