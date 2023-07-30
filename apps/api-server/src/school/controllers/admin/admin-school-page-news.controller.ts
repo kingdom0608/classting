@@ -26,6 +26,8 @@ export class AdminSchoolPageNewsController {
   async createSchoolPageNewsForAdmin(
     @Body() schoolData: CreateSchoolPageNewsRequestType,
   ) {
+    // TODO(@ahnjaesung): 운영자 계정 판단은 데코레이터에서 토큰을 가지고 판단  date: 2023/07/30 9:52 PM
+
     /** 학교 페이지 정보 확인 */
     await this.schoolPageService.getSchoolPageById(schoolData.schoolPageId);
 
@@ -45,6 +47,8 @@ export class AdminSchoolPageNewsController {
     @Param('id') id: number,
     @Body() schoolPageNewsData: UpdateSchoolPageNewsRequestType,
   ) {
+    // TODO(@ahnjaesung): 운영자 계정 판단은 데코레이터에서 토큰을 가지고 판단  date: 2023/07/30 9:52 PM
+
     return this.schoolPageNewsService.updateSchoolPageNewsById(id, {
       ...schoolPageNewsData,
     });
@@ -57,6 +61,8 @@ export class AdminSchoolPageNewsController {
   @ApiOkResponse({ type: SchoolPageNewsResponseType })
   @Delete('id/:id')
   async deleteSchoolPageNewsForAdmin(@Param('id') id: number) {
+    // TODO(@ahnjaesung): 운영자 계정 판단은 데코레이터에서 토큰을 가지고 판단  date: 2023/07/30 9:52 PM
+
     return this.schoolPageNewsService.deleteSchoolPageNewsById(id);
   }
 }

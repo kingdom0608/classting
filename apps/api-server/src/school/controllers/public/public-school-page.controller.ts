@@ -1,6 +1,10 @@
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Query } from '@nestjs/common';
-import { SchoolPageService, StudentSubscriptionService } from '../../services';
+import {
+  SchoolPageService,
+  StudentService,
+  StudentSubscriptionService,
+} from '../../services';
 import { ListSchoolPageRequestType, SchoolPageResponseType } from '../../types';
 
 @ApiTags('[Public] schoolPage')
@@ -10,6 +14,7 @@ import { ListSchoolPageRequestType, SchoolPageResponseType } from '../../types';
 export class PublicSchoolPageController {
   constructor(
     private readonly schoolPageService: SchoolPageService,
+    private readonly studentService: StudentService,
     private readonly studentSubscriptionService: StudentSubscriptionService,
   ) {}
 
@@ -20,6 +25,11 @@ export class PublicSchoolPageController {
   @ApiOkResponse({ type: [SchoolPageResponseType] })
   @Get()
   async listSchoolPage(@Query() query: ListSchoolPageRequestType) {
+    // TODO(@ahnjaesung): 유저 계정 판단은 데코레이터에서 토큰을 가지고 판단  date: 2023/07/30 9:52 PM
+
+    /** 학생 조회 */
+    await this.studentService.getStudentById(query.studentId);
+
     const studentSubscriptions =
       await this.studentSubscriptionService.listStudentSubscriptionByStudentId(
         query.studentId,

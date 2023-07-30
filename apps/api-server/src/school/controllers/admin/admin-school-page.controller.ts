@@ -1,11 +1,11 @@
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Body, ConflictException, Controller, Post } from '@nestjs/common';
+import { ESchoolPageErrorMessage } from '@app/common';
 import { SchoolPageService } from '../../services';
 import {
   CreateSchoolPageRequestType,
   SchoolPageResponseType,
 } from '../../types';
-import { ESchoolPageErrorMessage } from '@app/common';
 
 @ApiTags('[Admin] schoolPage')
 @Controller({
@@ -23,6 +23,8 @@ export class AdminSchoolPageController {
   async createSchoolPageForAdmin(
     @Body() schoolData: CreateSchoolPageRequestType,
   ) {
+    // TODO(@ahnjaesung): 운영자 계정 판단은 데코레이터에서 토큰을 가지고 판단  date: 2023/07/30 9:52 PM
+
     /** 학교 정보 확인 */
     const findSchool = await this.schoolPageService.getSchoolPageByNameLocation(
       schoolData.name,

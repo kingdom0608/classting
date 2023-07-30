@@ -3,6 +3,7 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { ESchoolPageNewsStatus } from '@app/common';
 import {
   SchoolPageNewsService,
+  StudentService,
   StudentSubscriptionService,
 } from '../../services';
 import {
@@ -18,6 +19,7 @@ import {
 export class PublicSchoolPageNewsController {
   constructor(
     private readonly schoolPageNewsService: SchoolPageNewsService,
+    private readonly studentService: StudentService,
     private readonly studentSubscriptionService: StudentSubscriptionService,
   ) {}
 
@@ -43,6 +45,11 @@ export class PublicSchoolPageNewsController {
   async listSchoolPageNewsFeed(
     @Query() query: ListSchoolPageNewsFeedRequestType,
   ) {
+    // TODO(@ahnjaesung): 유저 계정 판단은 데코레이터에서 토큰을 가지고 판단  date: 2023/07/30 9:52 PM
+
+    /** 학생 조회 */
+    await this.studentService.getStudentById(query.studentId);
+
     const studentSubscriptions =
       await this.studentSubscriptionService.listStudentSubscriptionByStudentIdForFeed(
         query.studentId,

@@ -1,6 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DOMAINS, ESchoolOperatorStatus } from '@app/common';
+import {
+  DOMAINS,
+  EOperatorErrorMessage,
+  ESchoolOperatorStatus,
+} from '@app/common';
 import { Repository } from 'typeorm';
 import { Operator } from '../entities';
 
@@ -8,7 +12,7 @@ import { Operator } from '../entities';
 export class OperatorService {
   constructor(
     @InjectRepository(Operator, DOMAINS.School)
-    private readonly schoolOperatorRepository: Repository<Operator>,
+    private readonly operatorRepository: Repository<Operator>,
   ) {}
 
   /**
@@ -16,9 +20,27 @@ export class OperatorService {
    * @param operatorData
    */
   async createOperator(operatorData: { name: string }) {
-    return this.schoolOperatorRepository.save({
+    return this.operatorRepository.save({
       ...operatorData,
       status: ESchoolOperatorStatus.ACTIVE,
     });
+  }
+
+  /**
+   * 관리자 조회
+   * @param id
+   */
+  async getOperatorById(id: number) {
+    const findOperator = await this.operatorRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!findOperator) {
+      throw new NotFoundException(EOperatorErrorMessage.OPERATOR_NOT_FOUND);
+    }
+
+    return findOperator;
   }
 }

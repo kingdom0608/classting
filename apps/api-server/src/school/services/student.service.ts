@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DOMAINS, EStudentStatus } from '@app/common';
+import { DOMAINS, EStudentErrorMessage, EStudentStatus } from '@app/common';
 import { Repository } from 'typeorm';
 import { Student } from '../entities';
 
@@ -20,5 +20,23 @@ export class StudentService {
       ...StudentData,
       status: EStudentStatus.ACTIVE,
     });
+  }
+
+  /**
+   * 학생 조회
+   * @param id
+   */
+  async getStudentById(id: number) {
+    const findStudent = await this.studentRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!findStudent) {
+      throw new NotFoundException(EStudentErrorMessage.STUDENT_NOT_FOUND);
+    }
+
+    return findStudent;
   }
 }

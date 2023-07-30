@@ -1,6 +1,6 @@
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Post } from '@nestjs/common';
-import { StudentSubscriptionService } from '../../services';
+import { StudentService, StudentSubscriptionService } from '../../services';
 import {
   StudentSubscriptionResponseType,
   SubscriptionSchoolPageRequestType,
@@ -13,6 +13,7 @@ import {
 })
 export class PublicStudentSubscriptionController {
   constructor(
+    private readonly studentService: StudentService,
     private readonly studentSubscriptionService: StudentSubscriptionService,
   ) {}
 
@@ -25,6 +26,13 @@ export class PublicStudentSubscriptionController {
   async subscriptionSchoolPage(
     @Body() subscriptionSchoolPageData: SubscriptionSchoolPageRequestType,
   ) {
+    // TODO(@ahnjaesung): 유저 계정 판단은 데코레이터에서 토큰을 가지고 판단  date: 2023/07/30 9:52 PM
+
+    /** 학생 조회 */
+    await this.studentService.getStudentById(
+      subscriptionSchoolPageData.studentId,
+    );
+
     return this.studentSubscriptionService.createStudentSubscription({
       ...subscriptionSchoolPageData,
       isSubscription: true,
@@ -40,6 +48,13 @@ export class PublicStudentSubscriptionController {
   async unsubscriptionSchoolPage(
     @Body() unsubscriptionSchoolPageData: UnsubscriptionSchoolPageRequestType,
   ) {
+    // TODO(@ahnjaesung): 유저 계정 판단은 데코레이터에서 토큰을 가지고 판단  date: 2023/07/30 9:52 PM
+
+    /** 학생 조회 */
+    await this.studentService.getStudentById(
+      unsubscriptionSchoolPageData.studentId,
+    );
+
     return this.studentSubscriptionService.createStudentSubscription({
       ...unsubscriptionSchoolPageData,
       isSubscription: false,
