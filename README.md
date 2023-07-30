@@ -14,7 +14,7 @@ $ npm install
 
 ```bash
 # local
-$ npm run start:local
+$ npm run start:local:api-server
 ```
 
 ## Deploy
