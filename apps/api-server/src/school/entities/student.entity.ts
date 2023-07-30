@@ -1,32 +1,20 @@
-import { DOMAINS, ESchoolPageLocation, ESchoolPageStatus } from '@app/common';
-import { OneToMany } from '@app/common/decorators';
-import { SchoolPageNews } from './school-page-news.entity';
+import { DOMAINS, EStudentStatus } from '@app/common';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { OneToMany } from '@app/common/decorators';
 import { StudentSubscription } from './student-subscription.entity';
 
 @Entity({ database: DOMAINS.School })
-@Index(['status'], { unique: false })
-export class SchoolPage {
-  @OneToMany(
-    () => SchoolPageNews,
-    (schoolPageNews) => schoolPageNews.schoolPage,
-    {
-      cascade: true,
-    },
-  )
-  news: SchoolPageNews[];
-
+export class Student {
   @OneToMany(
     () => StudentSubscription,
-    (studentSubscription) => studentSubscription.schoolPage,
+    (studentSubscription) => studentSubscription.student,
     {
       cascade: true,
     },
@@ -36,9 +24,6 @@ export class SchoolPage {
   @PrimaryGeneratedColumn({ comment: 'ID' })
   id: number;
 
-  @Column({ comment: '상태', type: 'varchar', length: 30 })
-  status: ESchoolPageStatus;
-
   @Column({
     comment: '이름',
     type: 'varchar',
@@ -46,12 +31,8 @@ export class SchoolPage {
   })
   name: string;
 
-  @Column({
-    comment: '지역',
-    type: 'varchar',
-    length: 30,
-  })
-  location: ESchoolPageLocation;
+  @Column({ comment: '상태', type: 'varchar', length: 30 })
+  status: EStudentStatus;
 
   @CreateDateColumn({ comment: '생성 일자' })
   createDate: Date;

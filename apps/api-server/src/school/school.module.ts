@@ -9,13 +9,28 @@ import {
   parsedEnvFile,
 } from '@app/common';
 import {
-  School,
-  SchoolMember,
-  SchoolMemberSubscription,
-  SchoolOperator,
+  Operator,
   SchoolPage,
   SchoolPageNews,
+  Student,
+  StudentSubscription,
 } from './entities';
+import {
+  OperatorService,
+  SchoolPageNewsService,
+  SchoolPageService,
+  StudentService,
+  StudentSubscriptionService,
+} from './services';
+import {
+  AdminSchoolPageController,
+  AdminSchoolPageNewsController,
+} from './controllers';
+import {
+  PublicSchoolPageController,
+  PublicSchoolPageNewsController,
+  PublicStudentSubscriptionController,
+} from './controllers/public';
 
 @Module({
   imports: [
@@ -30,20 +45,25 @@ import {
       inject: [ConfigService],
     }),
     TypeOrmModule.forFeature(
-      [
-        School,
-        SchoolPage,
-        SchoolPageNews,
-        SchoolMember,
-        SchoolMemberSubscription,
-        SchoolOperator,
-      ],
+      [SchoolPage, SchoolPageNews, Operator, Student, StudentSubscription],
       DOMAINS.School,
     ),
     CommonModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [
+    AdminSchoolPageController,
+    AdminSchoolPageNewsController,
+    PublicSchoolPageController,
+    PublicSchoolPageNewsController,
+    PublicStudentSubscriptionController,
+  ],
+  providers: [
+    SchoolPageService,
+    SchoolPageNewsService,
+    OperatorService,
+    StudentService,
+    StudentSubscriptionService,
+  ],
 })
 export class SchoolModule {
   configure(consumer: MiddlewareConsumer): any {

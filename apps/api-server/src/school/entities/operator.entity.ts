@@ -1,30 +1,17 @@
 import { DOMAINS, ESchoolOperatorStatus } from '@app/common';
-import { ManyToOne } from '@app/common/decorators';
-import { School } from './school.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  RelationId,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({ database: DOMAINS.School })
-export class SchoolOperator {
-  @ManyToOne(() => School, (school) => school.operators, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  school: School;
-
+export class Operator {
   @PrimaryGeneratedColumn({ comment: 'ID' })
   id: number;
-
-  @Column({ comment: '학교 ID' })
-  @RelationId((schoolOperator: SchoolOperator) => schoolOperator.school)
-  schoolId: number;
 
   @Column({
     comment: '이름',
