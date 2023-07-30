@@ -10,7 +10,13 @@ import {
 import { faker } from '@faker-js/faker';
 import { SchoolPageService } from './school-page.service';
 import { SchoolPageNewsService } from './school-page-news.service';
-import { Operator, SchoolPage, SchoolPageNews } from '../entities';
+import {
+  Operator,
+  SchoolPage,
+  SchoolPageNews,
+  Student,
+  StudentSubscription,
+} from '../entities';
 
 describe('SchoolPageNewsService', () => {
   const name = faker.internet.userName();
@@ -34,7 +40,7 @@ describe('SchoolPageNewsService', () => {
           inject: [ConfigService],
         }),
         TypeOrmModule.forFeature(
-          [SchoolPage, SchoolPageNews, Operator],
+          [SchoolPage, SchoolPageNews, Operator, Student, StudentSubscription],
           DOMAINS.School,
         ),
         CommonModule,

@@ -8,6 +8,7 @@ $ npm install
 ```
 - create local.env file
 - create database schema "school"
+- mock-data.service.spec.ts(apps/api-server/school/services) file execute => Operator, Student metadata will create
 ```
 
 ## Running the app

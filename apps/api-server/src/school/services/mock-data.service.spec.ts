@@ -7,7 +7,7 @@ import {
   generateTypeormModuleOptions,
 } from '@app/common';
 import { faker } from '@faker-js/faker';
-import { StudentService } from './Student.service';
+import { OperatorService } from './operator.service';
 import {
   Operator,
   SchoolPage,
@@ -15,9 +15,10 @@ import {
   Student,
   StudentSubscription,
 } from '../entities';
+import { StudentService } from './student.service';
 
-describe('StudentService', () => {
-  const name = faker.internet.userName();
+describe('MockDataService', () => {
+  let operatorService: OperatorService;
   let studentService: StudentService;
 
   beforeAll(async () => {
@@ -39,13 +40,24 @@ describe('StudentService', () => {
         ),
         CommonModule,
       ],
-      providers: [StudentService],
+      providers: [OperatorService, StudentService],
     }).compile();
 
+    operatorService = module.get<OperatorService>(OperatorService);
     studentService = module.get<StudentService>(StudentService);
   });
 
+  it('createOperator', async () => {
+    const name = faker.internet.userName();
+    const result = await operatorService.createOperator({
+      name: name,
+    });
+    // console.log(result);
+    expect(result.name).toBe(name);
+  });
+
   it('createStudent', async () => {
+    const name = faker.internet.userName();
     const result = await studentService.createStudent({
       name: name,
     });

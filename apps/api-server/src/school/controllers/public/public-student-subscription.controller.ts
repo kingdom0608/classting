@@ -1,6 +1,10 @@
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Post } from '@nestjs/common';
-import { StudentService, StudentSubscriptionService } from '../../services';
+import {
+  SchoolPageService,
+  StudentService,
+  StudentSubscriptionService,
+} from '../../services';
 import {
   StudentSubscriptionResponseType,
   SubscriptionSchoolPageRequestType,
@@ -9,10 +13,11 @@ import {
 
 @ApiTags('[Public] schoolPage')
 @Controller({
-  path: 'public/student-subscriptions',
+  path: 'public/school-pages',
 })
 export class PublicStudentSubscriptionController {
   constructor(
+    private readonly schoolPageService: SchoolPageService,
     private readonly studentService: StudentService,
     private readonly studentSubscriptionService: StudentSubscriptionService,
   ) {}
@@ -31,6 +36,11 @@ export class PublicStudentSubscriptionController {
     /** 학생 조회 */
     await this.studentService.getStudentById(
       subscriptionSchoolPageData.studentId,
+    );
+
+    /** 학교 페이지 조회 */
+    await this.schoolPageService.getSchoolPageById(
+      subscriptionSchoolPageData.schoolPageId,
     );
 
     return this.studentSubscriptionService.createStudentSubscription({
@@ -53,6 +63,11 @@ export class PublicStudentSubscriptionController {
     /** 학생 조회 */
     await this.studentService.getStudentById(
       unsubscriptionSchoolPageData.studentId,
+    );
+
+    /** 학교 페이지 조회 */
+    await this.schoolPageService.getSchoolPageById(
+      unsubscriptionSchoolPageData.schoolPageId,
     );
 
     return this.studentSubscriptionService.createStudentSubscription({
