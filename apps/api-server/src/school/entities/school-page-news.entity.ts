@@ -32,6 +32,13 @@ export class SchoolPageNews {
   @Column({ comment: '상태', type: 'varchar', length: 30 })
   status: ESchoolPageNewsStatus;
 
+  @Column({
+    comment: '컨텐츠',
+    type: 'text',
+    nullable: true,
+  })
+  content?: string;
+
   @CreateDateColumn({ comment: '생성 일자' })
   createDate: Date;
 

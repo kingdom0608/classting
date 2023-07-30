@@ -12,8 +12,8 @@ export function setupSwagger(app: INestApplication) {
   const packageJsonData = JSON.parse(fs.readFileSync(file, 'utf8'));
   const theme = new SwaggerTheme('v3');
   const options = new DocumentBuilder()
-    .setTitle(`ohssok-api-server`)
-    .setDescription(`ohssok-api-server`)
+    .setTitle(`classting-api-server`)
+    .setDescription(`classting-api-server`)
     .setVersion(`${packageJsonData.version}`)
     .addApiKey(
       { type: 'apiKey', in: 'header', name: 'x-access-token' },
@@ -25,7 +25,7 @@ export function setupSwagger(app: INestApplication) {
       persistAuthorization: true,
     },
     customCss: theme.getBuffer('dark'),
-    customSiteTitle: 'ohssok-api-server',
+    customSiteTitle: 'classting-api-server',
   };
   const document = SwaggerModule.createDocument(app, options);
 
