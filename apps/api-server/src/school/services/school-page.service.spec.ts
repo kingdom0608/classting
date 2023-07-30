@@ -40,7 +40,7 @@ describe('SchoolPageService', () => {
 
   afterAll(async () => {
     /** 테스트 학교 삭제 */
-    await schoolPageService.deleteSchoolPate(createSchoolPage.id);
+    await schoolPageService.deleteSchoolPageById(createSchoolPage.id);
   });
 
   it('createPageSchool', async () => {

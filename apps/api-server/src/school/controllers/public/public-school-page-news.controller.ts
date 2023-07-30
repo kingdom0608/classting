@@ -1,5 +1,6 @@
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Query } from '@nestjs/common';
+import { ESchoolPageNewsStatus } from '@app/common';
 import {
   SchoolPageNewsService,
   StudentSubscriptionService,
@@ -9,8 +10,6 @@ import {
   ListSchoolPageNewsRequestType,
   SchoolPageNewsResponseType,
 } from '../../types';
-import { ESchoolPageNewsStatus } from '@app/common';
-import { Between, MoreThan } from 'typeorm';
 
 @ApiTags('[Public] schoolPage')
 @Controller({

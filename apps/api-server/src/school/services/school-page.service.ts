@@ -116,6 +116,7 @@ export class SchoolPageService {
         id: id,
       });
 
+      /** 학교 페이지 뉴스 삭제 */
       await manager.softDelete(SchoolPageNews, {
         schoolPageId: id,
       });

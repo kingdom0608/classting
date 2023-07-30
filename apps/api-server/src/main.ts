@@ -45,7 +45,7 @@ async function bootstrap() {
   if (isLocal()) {
     console.log(`✅ api-server ready at http://localhost:${port}`);
     console.log(
-      `✅ swagger ready at http://localhost:${port}/${packageJsonData.version}/docs`,
+      `✅ api-server swagger ready at http://localhost:${port}/${packageJsonData.version}/docs`,
     );
   }
 }
